@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Creative Corner - Art Section</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #e9f5f9; /* Light pastel blue background */
+            color: #333; /* Dark text for contrast */
+            margin: 0;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #ffffff; /* White background for content area */
+            border-radius: 8px;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        h1 {
+            font-size: 2.5em;
+            color: #ff6f61; /* Coral color for the title */
+        }
+        
+        h2 {
+            margin-top: 20px;
+            font-size: 1.8em;
+            color: #4db8ff; /* Light blue color for section titles */
+            border-bottom: 2px solid #ff6f61;
+            padding-bottom: 5px;
+        }
+        
+        .art-area {
+            margin-bottom: 30px;
+        }
+        
+        .art-display {
+            margin-top: 10px;
+            padding: 10px;
+            border: 1px solid #b3e0ff; /* Light blue border */
+            border-radius: 5px;
+            background-color: #f0f8ff; /* Light background for submissions */
+        }
+        
+        .submission {
+            margin-top: 15px;
+        }
+        
+        .art-image {
+            max-width: 100%; /* Responsive image */
+            height: auto;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+        
+        .submission-form {
+            margin-top: 30px;
+        }
+        
+        label {
+            display: block;
+            margin: 10px 0 5px;
+            color: #333; /* Darker color for labels */
+        }
+        
+        input[type="text"],
+        input[type="file"],
+        textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #cce7ff; /* Light blue border */
+            border-radius: 5px;
+            box-sizing: border-box; /* Include padding and border in width */
+        }
+        
+        button {
+            background-color: #ff6f61; /* Coral color for the button */
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease; /* Smooth transition for hover effect */
+            width: 100%; /* Full width button */
+        }
+        
+        button:hover {
+            background-color: #e55a4c; /* Darker coral on hover */
+        }
+        
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Creative Corner: Art Section</h1>
+            <p>Showcase your digital art, sketches, or paintings.</p>
+        </header>
+
+        <section class="art-area">
+            <h2>Your Artwork</h2>
+            <div class="art-display">
+                <!-- This is where user submissions can be displayed -->
+                <p>No artwork submitted yet. Be the first to share your creations!</p>
+            </div>
+        </section>
+
+        <section class="submission-form">
+            <h2>Submit Your Artwork</h2>
+            <form id="artForm">
+                <label for="title">Title:</label>
+                <input type="text" id="title" name="title" required>
+
+                <label for="image">Upload Image:</label>
+                <input type="file" id="image" name="image" accept="image/*" required>
+
+                <label for="description">Description:</label>
+                <textarea id="description" name="description" rows="4" required></textarea>
+
+                <button type="submit">Submit</button>
+            </form>
+        </section>
+    </div>
+
+    <script>
+        // Simple script to handle form submission
+        document.getElementById("artForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+            const title = document.getElementById("title").value.trim();
+            const description = document.getElementById("description").value.trim();
+            const imageFile = document.getElementById("image").files[0];
+            const displayArea = document.querySelector(".art-display");
+
+            // Validate input fields
+            if (!title || !description || !imageFile) {
+                alert("Please fill in all fields.");
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const submission = document.createElement("div");
+                submission.classList.add("submission");
+                submission.innerHTML = `
+                    <h3>${title}</h3>
+                    <img src="${e.target.result}" alt="${title}" class="art-image">
+                    <p>${description}</p>
+                `;
+                displayArea.appendChild(submission);
+            };
+            reader.readAsDataURL(imageFile);
+
+            // Clear the form
+            this.reset();
+        });
+    </script>
+</body>
+</html>
